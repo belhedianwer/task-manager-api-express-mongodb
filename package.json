@@ -1,0 +1,25 @@
+{
+  "name": "task-manager-api-express-mongodb",
+  "version": "1.0.0",
+  "description": "This is a task manager API built with Express and MongoDB, this API allows users to create, update, and delete projects, tickets, and tasks.",
+  "main": "index.js",
+  "repository": "https://github.com/belhedianwer/task-manager-api-express-mongodb.git",
+  "author": "Anwer Awled Belhedi <belhedi.anwer@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
