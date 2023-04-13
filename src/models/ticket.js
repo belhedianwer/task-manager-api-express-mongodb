@@ -14,7 +14,7 @@ const ticketSchema = new mongoose.Schema({
         enum: ['todo', 'in-progress', 'done'],
         default: 'todo',
     },
-    projectId: {
+    project: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Project',
         required: true,

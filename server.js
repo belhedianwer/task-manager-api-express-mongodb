@@ -13,9 +13,10 @@ dotenv.config();
 const app = express();
 
 // Middlewares
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
-app.use(authMiddleware.authenticateToken);
+// app.use(authMiddleware.authenticateToken);
 
 // Routes
 app.use('/projects', projectRoutes);

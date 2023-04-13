@@ -14,12 +14,12 @@ const taskSchema = new mongoose.Schema({
         enum: ['todo', 'in-progress', 'done'],
         default: 'todo',
     },
-    projectId: {
+    project: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Project',
         required: true,
     },
-    ticketId: {
+    ticket: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Ticket',
         required: true,

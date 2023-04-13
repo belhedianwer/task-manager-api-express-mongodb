@@ -3,26 +3,28 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
 module.exports = {
-    register: (req, res) => {
+    register: async (req, res) => {
         const { username, password } = req.body;
         const user = new User({ username, password });
-        user.save((err) => {
-            if (err) {
-                res.status(500).json({ error: err.message });
-            } else {
-                res.json({ message: 'User successfully registered' });
-            }
-        });
+
+        try {
+            await user.save();
+            res.json({ message: 'User successfully registered' });
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
     },
 
-    login: (req, res) => {
+    login: async (req, res) => {
         const { username, password } = req.body;
-        User.findOne({ username }, (err, user) => {
-            if (err) {
-                res.status(500).json({ error: err.message });
-            } else if (!user) {
+
+        try {
+            const user = await User.findOne({ username });
+
+            if (!user) {
                 res.status(401).json({ error: 'User not found' });
-            } else {
+            }
+            else {
                 user.comparePassword(password, (err, isMatch) => {
                     if (err) {
                         res.status(500).json({ error: err.message });
@@ -35,6 +37,8 @@ module.exports = {
                     }
                 });
             }
-        });
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
     },
 };

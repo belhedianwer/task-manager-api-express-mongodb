@@ -4,22 +4,22 @@ const Task = require('../models/task');
 
 const createTask = async (req, res) => {
     try {
-        const { name, description } = req.body;
+        const { title, description } = req.body;
 
-        const project = await Project.findById(req.params.projectId);
+        const project = await Project.findById(req.body.project);
 
         if (!project) {
             return res.status(404).json({ message: 'Project not found' });
         }
 
-        const ticket = await Ticket.findById(req.params.ticketId);
+        const ticket = await Ticket.findById(req.body.ticket);
 
         if (!ticket) {
             return res.status(404).json({ message: 'Ticket not found' });
         }
 
         const task = new Task({
-            name,
+            title,
             description,
             ticket: ticket._id,
             project: project._id,
@@ -35,7 +35,8 @@ const createTask = async (req, res) => {
 
 const getAllTasks = async (req, res) => {
     try {
-        const tasks = await Task.find({ ticket: req.params.ticketId });
+        const tasks = await Task.find();
+
         return res.status(200).json(tasks);
     } catch (error) {
         return res.status(500).json({ message: error.message });
@@ -44,10 +45,7 @@ const getAllTasks = async (req, res) => {
 
 const getTaskById = async (req, res) => {
     try {
-        const task = await Task.findOne({
-            _id: req.params.id,
-            ticket: req.params.ticketId,
-        });
+        const task = await Task.findOne(req.params.id);
 
         if (!task) {
             return res.status(404).json({ message: 'Task not found' });
@@ -61,32 +59,13 @@ const getTaskById = async (req, res) => {
 
 const updateTask = async (req, res) => {
     try {
-        const { name, description, status } = req.body;
+        const updatedTask = await Task.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        );
 
-        const task = await Task.findOne({
-            _id: req.params.id,
-            ticket: req.params.ticketId,
-        });
-
-        if (!task) {
-            return res.status(404).json({ message: 'Task not found' });
-        }
-
-        if (name) {
-            task.name = name;
-        }
-
-        if (description) {
-            task.description = description;
-        }
-        
-        if (status) {
-            task.status = status;
-        }
-
-        await task.save();
-
-        return res.status(200).json(task);
+        return res.status(200).json(updatedTask);
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
@@ -94,10 +73,7 @@ const updateTask = async (req, res) => {
 
 const deleteTask = async (req, res) => {
     try {
-        const task = await Task.findOne({
-            _id: req.params.id,
-            ticket: req.params.ticketId,
-        });
+        const task = await Task.findOne(req.params.id);
 
         if (!task) {
             return res.status(404).json({ message: 'Task not found' });

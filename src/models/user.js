@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
 // Function to hash password before saving to database
 userSchema.pre('save', function (next) {
     const user = this;
+    
     bcrypt.hash(user.password, 10, (err, hash) => {
         if (err) {
             return next(err);
