@@ -1,5 +1,5 @@
 # Task manager API
-This is a task manager API built with Express and MongoDB, this API allows users to create, update, and delete projects, tickets, and tasks.
+This is a task manager API built with Express and MongoDB, this API allows users to create, update, and delete projects, tickets, and tasks...
 
 ## Getting started
 
